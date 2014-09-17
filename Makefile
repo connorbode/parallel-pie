@@ -1,0 +1,19 @@
+run: clean generate execute
+	
+generate:
+	g++ src/main.cpp src/calculations.cpp -o build/main.o
+
+clean:
+	rm -rf build/*
+	rm -rf test/*
+
+execute:
+	./build/main.o
+
+test: clean buildTests executeTests
+
+buildTests:
+	g++ src/calculations.cpp src/calculations.spec.cpp -o test/unit.o
+
+executeTests:
+	./test/unit.o
