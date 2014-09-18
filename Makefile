@@ -1,7 +1,7 @@
 run: clean generate execute
 	
 generate:
-	g++ src/main.cpp src/calculations.cpp -o build/main.o
+	g++ src/sequential.cpp src/calculations.cpp -o build/sequential.o
 
 clean:
 	rm -rf build/*
