@@ -8,7 +8,7 @@ clean:
 	rm -rf test/*
 
 execute:
-	./build/main.o
+	./build/sequential.o
 
 test: clean buildTests executeTests
 
