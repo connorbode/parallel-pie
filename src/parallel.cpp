@@ -72,7 +72,6 @@ int main (int argc, char const *argv[]) {
     std::cout << "Time elapsed: " << us_elapsed << " microseconds; " << ms_elapsed << " milliseconds; " << s_elapsed << " seconds\n";
   }
 
-  // end timer and MPI
   MPI_Finalize();
 
   return 0;
