@@ -23,8 +23,7 @@ int main (int argc, char const *argv[]) {
   double          pi;         // the computed value of pi
 
   long int        s_elapsed,  // the length of the computation in seconds
-                  ms_elapsed, // the length of the computation in milliseconds
-                  us_elapsed; // the length of the computation in microseconds
+                  ms_elapsed; // the length of the computation in milliseconds
 
   bool            timer_started = false;
 
