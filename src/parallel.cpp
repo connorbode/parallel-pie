@@ -62,9 +62,8 @@ int main (int argc, char const *argv[]) {
   if (rank == ROOT) {
     pi = generatePi(total_hits, total_tries);
     gettimeofday(&end_time, NULL);
-    s_elapsed = end_time.tv_sec - start_time.tv_sec;
-    ms_elapsed = end_time.tv_usec / 1000 - start_time.tv_usec / 1000;
-    us_elapsed = end_time.tv_usec - start_time.tv_usec;
+    s_elapsed = end_time.tv_sec - start_time.tv_sec;  
+    ms_elapsed = (end_time.tv_usec / 1000 + end_time.tv_sec * 1000) - (start_time.tv_usec / 1000 + start_time.tv_sec * 1000);
     std::cout << "Tries: " << total_tries << "\n";
     std::cout << "Hits: " << total_hits << "\n";
     std::cout << "PI: " << pi << "\n";
