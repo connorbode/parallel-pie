@@ -1,5 +1,8 @@
 run: clean generate execute
 	
+buildAll:
+	mpiCC -Wall src/parallel.cpp src/calculations.cpp -o build/parallel.o
+
 generate:
 	g++ src/sequential.cpp src/calculations.cpp -o build/sequential.o
 
