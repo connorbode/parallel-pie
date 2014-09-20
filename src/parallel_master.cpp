@@ -74,7 +74,7 @@ int main (int argc, char const *argv[]) {
   std::cout << "Tries: " << total_tries << "\n";
   std::cout << "Hits: " << total_hits << "\n";
   std::cout << "PI: " << pi << "\n";
-  std::cout << "Time elapsed: " << us_elapsed << " microseconds; " << ms_elapsed << " milliseconds; " << s_elapsed << " seconds\n";
+  std::cout << "Time elapsed: " << ms_elapsed << " milliseconds; " << s_elapsed << " seconds\n";
 
   MPI_Finalize();
 
