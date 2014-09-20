@@ -3,35 +3,36 @@
 #include <cstdlib>
 #include <string>
 #include <sys/time.h>
-#include <mpi.h>
-
-#define MASTER 0; // MPI_Comm_rank of the master process
+#include "mpi.h"
 
 int main (int argc, char const *argv[]) {
+
+  const int       ROOT = 0;   // MPI_Comm_rank of the master process
 
   struct timeval  start_time, // start of computation
                   end_time;   // end of computation
 
   int             tries,      // number of attempts a given process has made
                   total_tries,// total number of attempts
-                  hits,       // number of tries made by a process which landed inside the circle
+                  hits,       // number of tries which landed inside the circle
                   total_hits, // total number of tries which landed inside the circle
                   reduce,     // the reduce status code
                   size,       // the size of the comm world
-                  rank,       // the rank of a process
-                  pi;         // the computed value of pi
+                  rank;       // the rank of a process
+
+  double          pi;         // the computed value of pi
 
   long int        s_elapsed,  // the length of the computation in seconds
                   ms_elapsed, // the length of the computation in milliseconds
                   us_elapsed; // the length of the computation in microseconds
 
   // check that number of total tries is suppplied
-  // try {
-  //   total_tries = std::stoi(argv[1]);
-  // } catch (...) {
-  //   std::cout << "Failed to parse number of random points.  Please supply an integer as the first argument.";
-  //   exit(0);
-  // }
+  try {
+    total_tries = atoi(argv[1]);
+  } catch (...) {
+    std::cout << "Failed to parse number of random points.  Please supply an integer as the first argument.";
+    exit(0);
+  }
 
   total_tries = 100000000;
 
@@ -44,14 +45,16 @@ int main (int argc, char const *argv[]) {
   MPI_Comm_size(MPI_COMM_WORLD, &size);
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+  std::cout << "I'm a process, and my rank is " << rank << "\n";
+
   // run this processes' share of the computation
   tries = total_tries / size;
   hits = computeHits(tries, 1);
 
   // reduce all computations and generate pi
-  reduce = MPI_Reduce(&hits, &total_hits, 1, MPI_INT, MASTER, MPI_COMM_WORLD);
+  reduce = MPI_Reduce(&hits, &total_hits, 1, MPI_INT, MPI_SUM, ROOT, MPI_COMM_WORLD);
   if (reduce != MPI_SUCCESS) std::cout << "MPI_Reduce failed..";
-  if (rank == MASTER) pi = generatePi(hits, tries);
+  if (rank == ROOT) pi = generatePi(hits, tries);
 
   // end timer and MPI
   MPI_Finalize();
