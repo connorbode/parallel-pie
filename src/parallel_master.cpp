@@ -44,9 +44,6 @@ int main (int argc, char const *argv[]) {
     exit(0);
   }
 
-  // seed rand
-  srand(time(NULL));
-
   // start timer
   if (!timer_started) {
     timer_started = true;
@@ -62,13 +59,12 @@ int main (int argc, char const *argv[]) {
   tries = total_tries / num_slaves;
   argzz[0] = (char*) malloc(256 * sizeof(char));
   sprintf(argzz[0], "%i", tries);
-  std::cout << "Arguments for slaves: " << &argzz[0] << "\n";
   std::cout << "Spawning slaves... \n";
   spawn = MPI_Comm_spawn(COMMAND, argzz, num_slaves, MPI_INFO_NULL, ROOT, MPI_COMM_SELF, &slave_group, (int*) MPI_ERRCODES_IGNORE);
   std::cout << "Spawn status code: " << spawn << "\n";
 
   // retrieve output from slaves
-  reduce = MPI_Reduce(&hits, &total_hits, 1, MPI_INT, MPI_SUM, ROOT, MPI_COMM_WORLD);
+  reduce = MPI_Reduce(&hits, &total_hits, 1, MPI_INT, MPI_SUM, MPI_ROOT, slave_group);
   if (reduce != MPI_SUCCESS) std::cout << "MPI_Reduce failed..";
 
   // output result and time difference
