@@ -6,7 +6,7 @@
 #include "mpi.h"
 
 const int       ROOT = 0;                     // MPI_Comm_rank of the master process
-char*     COMMAND = "parallel_slave.o";       // Slave command
+char*           COMMAND = "parallel_slave.o"; // Slave command
 
 struct timeval  start_time, // start of computation
                 end_time;   // end of computation
