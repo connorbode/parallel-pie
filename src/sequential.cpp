@@ -8,6 +8,11 @@ int main (int argc, char const *argv[]) {
   int tries, hits;
   long int s_elapsed, ms_elapsed;
 
+  if (argc < 2) {
+    std::cout << "Please supply an integer number of throws as the first argument to the program.\n";
+    exit(0);
+  }
+
   // check that number of random pts is supplied
   try {
     tries = atoi(argv[1]);
